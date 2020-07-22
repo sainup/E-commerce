@@ -21,9 +21,6 @@ public class Product {
     @Column(name="id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="category_id",nullable = false)
-    private ProductCategory category;
 
 
     @Column(name="sku")
@@ -58,6 +55,9 @@ public class Product {
     @Column(name="last_updated")
     private Date lastUpdated;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private  ProductCategory category;
 
 
 }
