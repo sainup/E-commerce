@@ -1,0 +1,54 @@
+
+<a routerLink="/admin/addCategory" class="btn btn-primary"> Add Category </a>
+
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+
+
+
+            <div class="row">
+
+                <table class="table" border="1px">
+
+                    <thead class="table-dark" >
+                        <tr>
+                            <th></th>
+                            <th>Category ID</th>
+                            <th>Name</th>
+                            <th>Actions</th>
+                            
+                           
+                        </tr>
+                
+                    </thead>
+                
+                    <tbody>
+                        <tr *ngFor="let tempCategory of productCategory">
+                            <td></td>
+                            <td class="align-middle">{{tempCategory.id}}</td>
+                            <td class="align-middle">{{tempCategory.categoryName }}</td>
+                            <td> <button (click)="confirtmation(tempCategory)" class="btn btn-danger"  > Delete </button>    <button (click)="updateCategory(tempCategory)" class="btn btn-info">Update</button></td> 
+                           
+                        </tr>
+                
+                    </tbody>
+                
+                    
+                </table>
+                
+
+                <!--if products empty then display a message-->
+
+                <div *ngIf="productCategory?.length == 0" class="alert alert-warning col-md-12" role="alert">
+                   No category found.
+                </div>
+
+
+
+            </div>
+
+            
+        </div>
+    </div>
+</div>

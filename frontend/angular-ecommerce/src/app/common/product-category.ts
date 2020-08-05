@@ -1,5 +1,5 @@
 export class ProductCategory {
 
-    id: number;
+    id: string;
     categoryName: string;
 }

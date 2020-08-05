@@ -18,11 +18,24 @@ import { CartDetailComponent } from './components/cart-detail/cart-detail.compon
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { from } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductListAdminComponent } from './components/product-list-admin/product-list-admin.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { ProductCategoryAdminComponent } from './components/product-category-admin/product-category-admin.component';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
+import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 const routes: Routes = [
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailComponent},
+  {path : 'admin/addProduct', component: ProductFormComponent},
+  {path : 'admin/updateCategory',component: UpdateCategoryComponent},
+  {path : 'admin/addCategory', component: CategoryFormComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
+  {path: 'admin/products', component: ProductListAdminComponent},
+  {path: 'admin/categories', component: ProductCategoryAdminComponent},
   {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category/:id', component: ProductListComponent},
   {path: 'category', component: ProductListComponent},
@@ -40,14 +53,21 @@ const routes: Routes = [
     ProductDetailsComponent,
     CartStatusComponent,
     CartDetailComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ProductListAdminComponent,
+    ProductFormComponent,
+    ProductCategoryAdminComponent,
+    CategoryFormComponent,
+    UpdateCategoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot()
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

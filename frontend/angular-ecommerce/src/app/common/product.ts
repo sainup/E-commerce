@@ -10,5 +10,6 @@ export class Product {
     unitsInStock:number;
     dateCreated;
     lastUpdated;
+    category : string;
 
 }

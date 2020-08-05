@@ -1,8 +1,6 @@
 package com.sain.ecommerce.config;
 
 import com.sain.ecommerce.entity.Country;
-import com.sain.ecommerce.entity.Product;
-import com.sain.ecommerce.entity.ProductCategory;
 import com.sain.ecommerce.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -32,10 +30,10 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         HttpMethod[] theUnsupportedActions = {HttpMethod.PUT,HttpMethod.POST,HttpMethod.DELETE};
 
         //disable HTTP methods for Products : PUT, POST , DELETE
-        disableHttpMethods(Product.class,config, theUnsupportedActions);
+//        disableHttpMethods(Product.class,config, theUnsupportedActions);
 
         //disable HTTP methods for ProductCategory : PUT, POST , DELETE
-        disableHttpMethods(ProductCategory.class,config, theUnsupportedActions);
+//        disableHttpMethods(ProductCategory.class,config, theUnsupportedActions);
 
         //disable HTTP methods for Countries : PUT, POST , DELETE
         disableHttpMethods(Country.class,config, theUnsupportedActions);
