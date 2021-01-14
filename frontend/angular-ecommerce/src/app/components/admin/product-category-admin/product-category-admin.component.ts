@@ -3,6 +3,7 @@ import { ProductCategory } from 'src/app/common/product-category';
 import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ProductCategoryService } from 'src/app/services/product-category.service';
 
 @Component({
   selector: 'app-product-category-admin',
@@ -20,7 +21,7 @@ export class ProductCategoryAdminComponent implements OnInit {
   categoryForm : FormGroup;
 
   constructor(private formBuilder : FormBuilder,
-    private productService : ProductService,
+    private categoryService : ProductCategoryService,
     private router: Router){
     
   }
@@ -34,13 +35,13 @@ export class ProductCategoryAdminComponent implements OnInit {
 
   listCategories(){
      //getting product categories 
-     this.productService.getProductCategories().subscribe(data => this.productCategory = data);
+     this.categoryService.getProductCategories().subscribe(data => this.productCategory = data);
   }
 
   deleteCategory(theProductCategory : ProductCategory){
     console.log(theProductCategory.id);
 
-    this.productService.deleteCategory(theProductCategory.id).subscribe(() => {
+    this.categoryService.deleteCategory(theProductCategory.id).subscribe(() => {
       this.listCategories();
     }
      
@@ -60,10 +61,10 @@ export class ProductCategoryAdminComponent implements OnInit {
   updateCategory(theProductCategory :ProductCategory){
 
 
-    
+    this.router.navigateByUrl(`admin/categories/${theProductCategory.id}`);
  
-    this.productService.updateCategory(theProductCategory);
-    this.router.navigateByUrl('admin/updateCategory');
+    this.categoryService.updateCategory(theProductCategory);
+    
 
     
 

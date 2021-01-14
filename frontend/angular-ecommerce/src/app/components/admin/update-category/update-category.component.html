@@ -1,14 +1,20 @@
-<form [formGroup]="categoryForm" >
+
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" >
 
     <!--Customer form group-->
     <div formGroupName="category" class="form-area">
         <h3>Product</h3>
+        
+
+        
+
+       
 
         <div class="row">
             <div class="col-md-2"> <label>Category Name</label></div>
             <div class="col-md-9">
                 <div class="input-space">
-                    <input formControlName="categoryName" type="text">
+                    <input formControlName="categoryName" type="text" >
                 </div>
             </div>
 

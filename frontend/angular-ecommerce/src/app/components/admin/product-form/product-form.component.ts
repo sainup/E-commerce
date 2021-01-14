@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/common/product';
 import { ToastrService } from 'ngx-toastr';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { ProductCategoryService } from 'src/app/services/product-category.service';
 
 @Component({
   selector: 'app-product-form',
@@ -24,6 +25,7 @@ export class ProductFormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private productService: ProductService,
+    private categoryService: ProductCategoryService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class ProductFormComponent implements OnInit {
       })
     });
 
-    this.productService.getProductCategories().subscribe(
+    this.categoryService.getProductCategories().subscribe(
       data => {
         console.log(JSON.stringify(data));
         this.categories = data
