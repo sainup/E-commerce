@@ -6,7 +6,7 @@ import { ProductListComponent } from './components/client/product-list/product-l
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from './services/product.service';
 
-import { Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule, Router} from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/client/product-details/product-details.component';
@@ -27,11 +27,32 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProductCategoryAdminComponent } from './components/admin/product-category-admin/product-category-admin.component';
 import { CategoryFormComponent } from './components/admin/category-form/category-form.component';
 import { UpdateCategoryComponent } from './components/admin/update-category/update-category.component';
+import { LoginComponent } from './components/login/login.component';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
 
+import {
+  OKTA_CONFIG,
+  OktaAuthModule,
+  OktaCallbackComponent
+} from '@okta/okta-angular';
+
+import myAppConfig from './config/my-app-config';
+
+const oktaConfig = Object.assign({
+  onAuthRequired : (injector)=>{
+    const router = injector.get(Router);
+
+    //redirec tthe user to your custom login page 
+    router.navigate(['/login']);
+  }
+},myAppConfig.oidc);
 
 
 //Adding routes to specific page
 const routes: Routes = [
+  {path : 'login/callback', component : OktaCallbackComponent},
+  {path : 'login', component : LoginComponent},
+
   {path: 'checkout', component: CheckoutComponent},
   {path: 'cart-details', component: CartDetailComponent},
   {path : 'admin/addProduct', component: ProductFormComponent},
@@ -64,7 +85,9 @@ const routes: Routes = [
     ProductFormComponent,
     ProductCategoryAdminComponent,
     CategoryFormComponent,
-    UpdateCategoryComponent
+    UpdateCategoryComponent,
+    LoginComponent,
+    LoginStatusComponent
    
   ],
   imports: [
@@ -74,9 +97,10 @@ const routes: Routes = [
     NgbModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    OktaAuthModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, { provide : OKTA_CONFIG , useValue : oktaConfig}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
