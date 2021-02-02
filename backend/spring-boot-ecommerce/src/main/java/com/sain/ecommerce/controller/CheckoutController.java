@@ -14,8 +14,10 @@ public class CheckoutController {
 
     private final CheckoutService checkoutService;
 
+
     @PostMapping("/purchase")
     public PurchaseResponse placeOrder(@RequestBody Purchase purchase){
+
 
         PurchaseResponse purchaseResponse = checkoutService.placeOrder(purchase);
 
