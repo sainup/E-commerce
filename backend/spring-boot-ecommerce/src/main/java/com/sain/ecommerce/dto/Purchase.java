@@ -1,9 +1,9 @@
 package com.sain.ecommerce.dto;
 
-import com.sain.ecommerce.entity.Address;
-import com.sain.ecommerce.entity.Customer;
-import com.sain.ecommerce.entity.Order;
-import com.sain.ecommerce.entity.OrderItem;
+import com.sain.ecommerce.model.Address;
+import com.sain.ecommerce.model.Customer;
+import com.sain.ecommerce.model.Order;
+import com.sain.ecommerce.model.OrderItem;
 import lombok.Data;
 
 import java.util.Set;

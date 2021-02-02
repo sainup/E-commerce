@@ -1,7 +1,7 @@
-package com.sain.ecommerce.DAO;
+package com.sain.ecommerce.repository;
 
 
-import com.sain.ecommerce.entity.Product;
+import com.sain.ecommerce.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

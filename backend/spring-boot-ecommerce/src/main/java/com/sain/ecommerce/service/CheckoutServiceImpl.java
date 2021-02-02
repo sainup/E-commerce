@@ -1,11 +1,11 @@
 package com.sain.ecommerce.service;
 
-import com.sain.ecommerce.DAO.CustomerRepository;
+import com.sain.ecommerce.repository.CustomerRepository;
 import com.sain.ecommerce.dto.Purchase;
 import com.sain.ecommerce.dto.PurchaseResponse;
-import com.sain.ecommerce.entity.Customer;
-import com.sain.ecommerce.entity.Order;
-import com.sain.ecommerce.entity.OrderItem;
+import com.sain.ecommerce.model.Customer;
+import com.sain.ecommerce.model.Order;
+import com.sain.ecommerce.model.OrderItem;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

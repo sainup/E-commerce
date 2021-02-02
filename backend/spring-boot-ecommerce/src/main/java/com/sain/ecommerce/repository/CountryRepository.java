@@ -1,6 +1,6 @@
-package com.sain.ecommerce.DAO;
+package com.sain.ecommerce.repository;
 
-import com.sain.ecommerce.entity.Country;
+import com.sain.ecommerce.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;

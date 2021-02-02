@@ -1,6 +1,6 @@
-package com.sain.ecommerce.DAO;
+package com.sain.ecommerce.repository;
 
-import com.sain.ecommerce.entity.Customer;
+import com.sain.ecommerce.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer,Long> {

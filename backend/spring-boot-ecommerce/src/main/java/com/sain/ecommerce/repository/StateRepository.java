@@ -1,6 +1,6 @@
-package com.sain.ecommerce.DAO;
+package com.sain.ecommerce.repository;
 
-import com.sain.ecommerce.entity.State;
+import com.sain.ecommerce.model.State;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

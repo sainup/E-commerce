@@ -1,4 +1,4 @@
-package com.sain.ecommerce.entity;
+package com.sain.ecommerce.model;
 
 
 
