@@ -23,7 +23,7 @@ public class JwtProvider {
 
     private KeyStore keyStore;
 
-    @Value("90000")
+    @Value("9000000")
     private Long jwtExpirationInMillis;
 
     //loads keystore from "springblog.jks" file. if not found throws exception

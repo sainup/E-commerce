@@ -22,6 +22,6 @@ public class WebConfiguration  implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
-    
+
 
 }
