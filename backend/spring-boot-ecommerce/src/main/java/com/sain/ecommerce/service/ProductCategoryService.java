@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 public class ProductCategoryService {
 
     private final ProductCategoryRepository productCategoryRepository;
-    private  final ProductCategoryMapper productCategoryMapper;
+    private final ProductCategoryMapper productCategoryMapper;
 
 
-    public List<ProductCategoryDto> getAllCategories(){
+    public List<ProductCategoryDto> getAllCategories() {
         return productCategoryRepository.findAll()
                 .stream()
-                .map(productCategoryMapper :: mapCategoryToDto)
+                .map(productCategoryMapper::mapCategoryToDto)
                 .collect(Collectors.toList());
 
     }
@@ -38,22 +38,22 @@ public class ProductCategoryService {
     }
 
     public ProductCategoryDto getCategory(Long id) {
-        ProductCategory productCategory = productCategoryRepository.findById(id).orElseThrow(()->new EcommerceException("Category not found"));
-        return productCategoryMapper.mapCategoryToDto(productCategory) ;
+        ProductCategory productCategory = productCategoryRepository.findById(id).orElseThrow(() -> new EcommerceException("Category Not found with ID : " + id));
+        return productCategoryMapper.mapCategoryToDto(productCategory);
     }
 
-    public ProductCategory updateCategory(Long id, ProductCategoryDto productCategoryDto){
+    public ProductCategory updateCategory(Long id, ProductCategoryDto productCategoryDto) {
         productCategoryDto.setId(id);
-        ProductCategory productCategory = productCategoryRepository.findById(id).orElseThrow(()-> new EcommerceException("Product Not found"));
+        productCategoryRepository.findById(id).orElseThrow(() -> new EcommerceException("Category Not found with ID : " + id));
         log.info("NAME OF CATEGORY =>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + productCategoryDto.getCategoryName());
         return productCategoryRepository.save(productCategoryMapper.mapDtoToCategory(productCategoryDto));
     }
 
-    public void deleteCategory(Long id){
+    public void deleteCategory(Long id) {
         ProductCategory productCategory = productCategoryRepository.findById(id)
-                .orElseThrow(()-> new EcommerceException("Couldn't find the Product Category"));
+                .orElseThrow(() -> new EcommerceException("Category Not found with ID : " + id));
 
-        if(productCategory != null){
+        if (productCategory != null) {
             productCategoryRepository.delete(productCategory);
         }
 

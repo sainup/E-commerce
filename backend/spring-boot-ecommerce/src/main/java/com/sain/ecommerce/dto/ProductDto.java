@@ -1,11 +1,10 @@
 package com.sain.ecommerce.dto;
 
 import com.sain.ecommerce.model.ProductCategory;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,12 +12,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class ProductDto {
 
     private Long id;
+    @NotBlank
     private String sku;
+    @NotBlank
     private String name;
     private String description;
+    @Min(value = 0,message = "Price cannot be lower than 0")
     private BigDecimal unitPrice;
     private String imageUrl;
     private boolean active;

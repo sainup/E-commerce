@@ -27,10 +27,15 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductDto> getAllProducts() {
 
-        return productRepository.findAll()
+        List<ProductDto> productDtoList =  productRepository.findAll()
                 .stream()
                 .map(productMapper::mapProductToDto)
                 .collect(Collectors.toList());
+        for(ProductDto product : productDtoList){
+            log.info("Getting Data from DB :: " + product);
+        }
+
+        return productDtoList;
     }
 
     public ProductDto addProduct(ProductDto productDto) {
@@ -42,6 +47,7 @@ public class ProductService {
 
 
     public ProductDto getProduct(Long id) {
+
 
         Product product = productRepository.findById(id).orElseThrow(() -> new EcommerceException("Product with id : " + id + " not found!"));
 
@@ -70,13 +76,14 @@ public class ProductService {
 
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(()-> new EcommerceException("Product with id : " + id + "couldn't be found."));
+                .orElseThrow(()-> new EcommerceException("Product with id : " + id + " not found!"));
         productRepository.delete(product);
     }
 
     public Product updateProduct(Long id, ProductDto productDto){
 
         productDto.setId(id);
+        productRepository.findById(id);
         return productRepository.save(productMapper.mapDtoToProduct(productDto));
 
     }

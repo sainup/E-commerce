@@ -1,7 +1,6 @@
 package com.sain.ecommerce.controller;
 
 import com.sain.ecommerce.dto.ProductCategoryDto;
-import com.sain.ecommerce.exceptions.EcommerceException;
 import com.sain.ecommerce.model.ProductCategory;
 import com.sain.ecommerce.service.ProductCategoryService;
 import lombok.AllArgsConstructor;
@@ -17,6 +16,7 @@ import java.util.List;
 public class ProductCategoryController {
 
     private ProductCategoryService productCategoryService;
+
 
     @GetMapping
     public ResponseEntity<List<ProductCategoryDto>> getAllCategories(){
@@ -43,13 +43,10 @@ public class ProductCategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id){
-        try{
-            productCategoryService.deleteCategory(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Successfully Deleted.");
-        }catch (EcommerceException e){
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Couldn't find Category with Id: " + id );
-        }
+        productCategoryService.deleteCategory(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Successfully Deleted");
+
 
     }
 
