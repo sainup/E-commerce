@@ -1,6 +1,7 @@
-# e-commerce
+# E-commerce
 
-Backend system for a simple e-commerce web app.
+Backend system for a  E-Commerce Web App.
 
-#Known bug
-*PUSH METHOD NOT WORKING THROUGH REST API
+
+
+
