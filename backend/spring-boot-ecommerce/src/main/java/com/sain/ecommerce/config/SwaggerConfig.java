@@ -19,8 +19,8 @@ public class SwaggerConfig {
     public Docket ecommerceApi(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.sain"))
+                .paths(PathSelectors.ant("/api/**"))
                 .build()
                 .apiInfo(getApiInfo());
     }

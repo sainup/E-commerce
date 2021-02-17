@@ -3,6 +3,7 @@ package com.sain.ecommerce.controller;
 import com.sain.ecommerce.dto.Purchase;
 import com.sain.ecommerce.dto.PurchaseResponse;
 import com.sain.ecommerce.service.CheckoutService;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,11 @@ public class CheckoutController {
 
 
     @PostMapping("/purchase")
+    @ApiOperation(value = "Places order")
     public PurchaseResponse placeOrder(@RequestBody Purchase purchase){
 
 
-        PurchaseResponse purchaseResponse = checkoutService.placeOrder(purchase);
-
-        return  purchaseResponse;
+        return checkoutService.placeOrder(purchase);
     }
 
 }
