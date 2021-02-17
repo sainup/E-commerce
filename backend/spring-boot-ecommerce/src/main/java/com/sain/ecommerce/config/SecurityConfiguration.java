@@ -29,6 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    //deals with the exposed api points(if to authenticate or permit)
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()

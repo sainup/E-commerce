@@ -21,14 +21,12 @@ import java.util.stream.Collectors;
 
 /**
  * * Handle all exceptions and java bean validation errors for all endpoints income data that use the @Valid annotation
- *
- * @author Ehab Qadah
  */
 @ControllerAdvice
 public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
 
 
-
+    //handles @Valid errors and throws HttpStatus.BAD_REQUEST
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
@@ -40,14 +38,16 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         return getExceptionResponseEntity(HttpStatus.BAD_REQUEST, request, validationErrors);
     }
 
+    //handles EcommerceException Errors
     @ExceptionHandler({EcommerceException.class})
     public ResponseEntity<Object> handleEcommerceException(
-            EcommerceException exception, WebRequest request){
-            String errors  = exception.getMessage();
-            return getExceptionResponseEntity(HttpStatus.NOT_FOUND,request,errors);
+            EcommerceException exception, WebRequest request) {
+        String errors = exception.getMessage();
+        return getExceptionResponseEntity(HttpStatus.NOT_FOUND, request, errors);
     }
 
 
+    //handles ConstraintViolationException Errors
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolation(
             ConstraintViolationException exception, WebRequest request) {
@@ -57,17 +57,21 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
         return getExceptionResponseEntity(HttpStatus.BAD_REQUEST, request, validationErrors);
     }
 
+    //helper method to return Entity with List of errors
     private ResponseEntity<Object> getExceptionResponseEntity(final HttpStatus status, WebRequest request, List<String> errors) {
         final Map<String, Object> body = new LinkedHashMap<>();
-        final String errorsMessage = CollectionUtils.isNotEmpty(errors) ? errors.stream().filter(StringUtils::isNotEmpty).collect(Collectors.joining(",")):status.getReasonPhrase();
+        final String errorsMessage = CollectionUtils.isNotEmpty(errors) ? errors.stream().filter(StringUtils::isNotEmpty).collect(Collectors.joining(",")) : status.getReasonPhrase();
         return getObjectResponseEntity(status, request, errorsMessage, body);
     }
+
+    //helper method to return Entity with error
     private ResponseEntity<Object> getExceptionResponseEntity(final HttpStatus status, WebRequest request, String errors) {
         final Map<String, Object> body = new LinkedHashMap<>();
 
         return getObjectResponseEntity(status, request, errors, body);
     }
 
+    //helper method to build values into a map and returns it back
     private ResponseEntity<Object> getObjectResponseEntity(HttpStatus status, WebRequest request, String errors, Map<String, Object> body) {
         final String path = request.getDescription(false);
         body.put("timestamp", LocalDateTime.now().toString());

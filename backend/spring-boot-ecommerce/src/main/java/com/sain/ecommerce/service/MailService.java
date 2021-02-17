@@ -19,22 +19,21 @@ public class MailService {
     private final JavaMailSender mailSender;
     private final MailContentBuilder mailContentBuilder;
 
+    //A async method which sends mail to the user
     @Async
-    public void sendMail(NotificationEmail notificationEmail){
+    public void sendMail(NotificationEmail notificationEmail) {
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom("fullstack_ecommerce@gmail.com");
             messageHelper.setTo(notificationEmail.getRecipient());
             messageHelper.setSubject(notificationEmail.getSubject());
-            messageHelper.setText(notificationEmail.getBody());
-
+            messageHelper.setText(mailContentBuilder.build(notificationEmail.getBody()));
         };
-
-        try{
+        try {
             mailSender.send(messagePreparator);
             log.info("Activation email sent!!");
-        }catch (MailException e){
-            log.error("Exception occurred while sending mail",e);
+        } catch (MailException e) {
+            log.error("Exception occurred while sending mail", e);
             throw new EcommerceException("Exception occurred while sending mail to " + notificationEmail.getRecipient(), e);
         }
     }

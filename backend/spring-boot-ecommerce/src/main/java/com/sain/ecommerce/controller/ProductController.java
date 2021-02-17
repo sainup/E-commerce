@@ -26,8 +26,8 @@ public class ProductController {
     @GetMapping
     @ApiOperation(value = "Finds all the Products",
     notes = "Retrieves all the products with pagination if needed.")
-    public ResponseEntity<List<ProductDto>> getAllProducts(@ApiParam(value ="define which page you want to retrieve",required = false ) @RequestParam(value = "page", required = false) String page,
-    @ApiParam(value ="define how many products should be retrieved",required = false )@RequestParam(value = "size", required = false) String size) {
+    public ResponseEntity<List<ProductDto>> getAllProducts(@ApiParam(value ="define which page you want to retrieve" ) @RequestParam(value = "page", required = false) String page,
+    @ApiParam(value ="define how many products should be retrieved" )@RequestParam(value = "size", required = false) String size) {
         return ResponseEntity.status(HttpStatus.OK).body(productService.pageProducts(page, size));
     }
 
@@ -50,6 +50,7 @@ public class ProductController {
     }
 
 
+    //deletes product by id
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletes Product by id",
             notes = "Provides an id to delete a specific product from product list")
@@ -58,6 +59,7 @@ public class ProductController {
         return  ResponseEntity.status(HttpStatus.OK).body("Successfully deleted");
     }
 
+    //updates product by id
     @PutMapping("/{id}")
     @ApiOperation(value = "Updates Product by id",
             notes = "Provides an id to update a specific product from product list")

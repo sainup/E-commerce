@@ -55,12 +55,16 @@ public class AuthService {
 
         String token = generateVerificationToken(user);
 
-        //sends the mail with activation token to the user
+        sendVerificationToken(user, token);
+
+    }
+
+    //sends the mail with activation token to the user
+    private void sendVerificationToken(User user, String token) {
         mailService.sendMail(new NotificationEmail("Please Activate your Account",
                 user.getEmail(),"Thank you for signing up to Our Ecommerce Project, " +
                 "Please click on the below url to activate your account : " +
-                "http://localhost:8080/api/auth/accountVerification/"+token));
-
+                "http://localhost:8080/api/auth/accountVerification/"+ token));
     }
 
     //generates verification token for the user and saves in the database

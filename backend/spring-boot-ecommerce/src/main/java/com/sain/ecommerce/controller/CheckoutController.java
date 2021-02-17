@@ -16,6 +16,7 @@ public class CheckoutController {
     private final CheckoutService checkoutService;
 
 
+    //places order
     @PostMapping("/purchase")
     @ApiOperation(value = "Places order")
     public PurchaseResponse placeOrder(@RequestBody Purchase purchase){

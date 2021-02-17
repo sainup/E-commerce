@@ -15,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    //configs how the swagger documentation should be like
     @Bean
     public Docket ecommerceApi(){
         return new Docket(DocumentationType.SWAGGER_2)
@@ -25,8 +26,8 @@ public class SwaggerConfig {
                 .apiInfo(getApiInfo());
     }
 
+    //sets the data for ApiInfo
     private ApiInfo getApiInfo(){
-
         return new ApiInfoBuilder()
                 .title("Ecommerce API Documentation")
                 .version("1.0")
