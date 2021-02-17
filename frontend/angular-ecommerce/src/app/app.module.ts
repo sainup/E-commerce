@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/client/product-list/product-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './services/product.service';
 
-import { Routes, RouterModule, Router} from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/client/product-details/product-details.component';
@@ -37,38 +37,39 @@ import {
 } from '@okta/okta-angular';
 
 import myAppConfig from './config/my-app-config';
+import { AuthInterceptor } from './shared/okta/auth-interceptor';
 
 const oktaConfig = Object.assign({
-  onAuthRequired : (injector)=>{
+  onAuthRequired: (injector) => {
     const router = injector.get(Router);
 
     //redirec tthe user to your custom login page 
     router.navigate(['/login']);
   }
-},myAppConfig.oidc);
+}, myAppConfig.oidc);
 
 
 //Adding routes to specific page
 const routes: Routes = [
-  {path : 'login/callback', component : OktaCallbackComponent},
-  {path : 'login', component : LoginComponent},
+  { path: 'login/callback', component: OktaCallbackComponent },
+  { path: 'login', component: LoginComponent },
 
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'cart-details', component: CartDetailComponent},
-  {path : 'admin/addProduct', component: ProductFormComponent},
-  {path : 'admin/updateCategory',component: UpdateCategoryComponent},
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'cart-details', component: CartDetailComponent },
+  { path: 'admin/addProduct', component: ProductFormComponent },
+  { path: 'admin/updateCategory', component: UpdateCategoryComponent },
 
-  {path : 'admin/addCategory', component: CategoryFormComponent},
-  {path: 'products/:id', component: ProductDetailsComponent},
-  {path: 'admin/products', component: ProductListAdminComponent},
-  {path: 'admin/categories', component: ProductCategoryAdminComponent},
-  {path: 'search/:keyword', component: ProductListComponent},
-  {path: 'category/:id', component: ProductListComponent},
-  {path: 'category', component: ProductListComponent},
-  {path: 'products', component: ProductListComponent},
-  {path: 'admin/categories/:id', component : UpdateCategoryComponent},
-  {path: '', redirectTo: '/products', pathMatch: 'full'},
-  {path: '**', redirectTo: '/products', pathMatch: 'full'}
+  { path: 'admin/addCategory', component: CategoryFormComponent },
+  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'admin/products', component: ProductListAdminComponent },
+  { path: 'admin/categories', component: ProductCategoryAdminComponent },
+  { path: 'search/:keyword', component: ProductListComponent },
+  { path: 'category/:id', component: ProductListComponent },
+  { path: 'category', component: ProductListComponent },
+  { path: 'products', component: ProductListComponent },
+  { path: 'admin/categories/:id', component: UpdateCategoryComponent },
+  { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: '**', redirectTo: '/products', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -88,7 +89,7 @@ const routes: Routes = [
     UpdateCategoryComponent,
     LoginComponent,
     LoginStatusComponent
-   
+
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -100,7 +101,11 @@ const routes: Routes = [
     ToastrModule.forRoot(),
     OktaAuthModule
   ],
-  providers: [ProductService, { provide : OKTA_CONFIG , useValue : oktaConfig}],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: oktaConfig },
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
