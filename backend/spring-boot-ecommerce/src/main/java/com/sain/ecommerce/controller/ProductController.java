@@ -31,7 +31,6 @@ public class ProductController {
     //to add new product
     @PostMapping
     public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody ProductDto productDto) {
-        log.info(("SKU++++++++++++++++++>>>> " + productDto.getSku()));
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.addProduct(productDto));
     }
 
