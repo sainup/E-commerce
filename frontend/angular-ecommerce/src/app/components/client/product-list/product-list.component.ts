@@ -21,8 +21,8 @@ export class ProductListComponent implements OnInit {
 
   // new properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
-  theTotalElements: number = 0;
+  thePageSize: number = 12;
+  theTotalElements: number ;
 
   previousKeyword: string = null;
 
@@ -38,25 +38,10 @@ export class ProductListComponent implements OnInit {
 
     this.route.paramMap.subscribe(() => {
       this.listProducts();
-
-      console.log("Router" + this.route.outlet);
-      console.log("Router" + this.route.root);
-      console.log("Router URL ====>>> " + this.route.snapshot.pathFromRoot);
-      console.log("Router URL ====>>> " + this.route.snapshot.url);
-      console.log("Router URL ====>>> " + this.route.snapshot.url[0].path);
-      console.log("Router URL ====>>> " + this.route.snapshot.root);
-      console.log("Router one +>>>" + this.router.url);
-
-
     });
-
-
-
   }
 
   listProducts() {
-
-
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
 
     if (this.searchMode) {
@@ -69,36 +54,30 @@ export class ProductListComponent implements OnInit {
   }
 
   handleSearchProducts() {
-
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
-
 
     //if we have a different keyword than previous 
     //then set thePageNumber to 1
-
-    if (this.previousKeyword != theKeyword) {
+    if (this.previousKeyword !== theKeyword) {
       this.thePageNumber = 1;
     }
+    this.previousKeyword = theKeyword;
 
-    console.log("Inside Handling method " + this.router.url);
-    if (this.router.url === "/admin/products") {
-      console.log("INISIDE THE KEYWORDS SEARCH")
-      this.previousKeyword = theKeyword;
-      console.log(`keyword =${theKeyword},thePageNumer = ${this.thePageNumber}`);
+    this.productService.searchProductsPaginate(this.thePageNumber -1 ,
+      this.thePageSize,
+      theKeyword).subscribe(this.processResult());
 
+   
+    // if (this.router.url === "/admin/products") {
+    //   this.previousKeyword = theKeyword;
+    //   this.productService.searchProductsPaginate(this.thePageNumber - 1,
+    //     this.thePageSize,
+    //     theKeyword).subscribe(data => {
+    //       this.products = data;
+    //       this.theTotalElements = this.products.length / this.thePageSize;
+    //     });
 
-
-
-      this.productService.searchProductsPaginate(this.thePageNumber - 1,
-        this.thePageSize,
-        theKeyword).subscribe(this.processResult());
-     
-    }
-
-
-
-    // now search for the products using keyword
-
+    // }
   }
 
   handleListProducts() {
@@ -109,26 +88,49 @@ export class ProductListComponent implements OnInit {
     if (hasCategoryId) {
       // get the "id" param string. convert string to a number using the "+" symbol
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id');
-      if (this.previousCategoryId != this.currentCategoryId) {
+      if (this.previousCategoryId !== this.currentCategoryId) {
         this.thePageNumber = 1;
       }
 
       this.previousCategoryId = this.currentCategoryId;
 
-      console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
+      this.productService.getProductList(this.currentCategoryId).subscribe(data =>{
+        this.products = data;
+        this.theTotalElements = data.length;
+
+      })
+
+      console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}, theTotalNumber =${this.theTotalElements},
+      thePageSize=${this.thePageSize}` );
 
       // now get the products for the given category id
       this.productService.getProductListPaginate(this.thePageNumber - 1,
         this.thePageSize,
         this.currentCategoryId)
-        .subscribe(this.processResult());
+        .subscribe(data => {
+          this.products = data;
+          // this.theTotalElements = this.products.length;
+        });
     }
     else {
-      // not category id available ... default to category id 1
+      this.productService.getFullProducts().subscribe(
+        data=>{
+          this.theTotalElements = data.length;
+        }
+      )
       this.productService.getFullProductList(this.thePageNumber - 1,
         this.thePageSize).subscribe(
-          this.processFullResult()
-        );
+          data => {
+            this.products = data;
+            // this.theTotalElements = this.products.length;
+            console.log(`INSIDE THE SUBSCRIPTION =>> thePageNumber=${this.thePageNumber}, theTotalNumber =${this.theTotalElements},
+          thePageSize=${this.thePageSize}, theProductsSize=${this.products.length}`  );
+          });
+
+        
+
+          console.log(`thePageNumber=${this.thePageNumber}, theTotalNumber =${this.theTotalElements},
+          thePageSize=${this.thePageSize}, theProductsSize=${this.products.length}`  );
     }
 
     //
@@ -141,6 +143,7 @@ export class ProductListComponent implements OnInit {
 
   }
 
+  // parses the data of products and pagination 
   processResult() {
     return data => {
       this.products = data._embedded.products;
@@ -150,14 +153,7 @@ export class ProductListComponent implements OnInit {
     };
   }
 
-  processFullResult() {
-    return data => {
-      this.products = data._embedded.products;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
-    };
-  }
+
 
   updatePageSize(pageSize: number) {
     this.thePageSize = pageSize;
@@ -168,9 +164,9 @@ export class ProductListComponent implements OnInit {
 
   addToCart(theProduct: Product) {
 
-    console.log(`Adding to cart : ${theProduct.name},${theProduct.unitPrice}`);
+    console.log(`Adding to cart : ${theProduct.name},${theProduct.unitPrice} ID : ${theProduct.id}`);
 
-    const theCartItem = new CartItem(theProduct);
+    let theCartItem = new CartItem(theProduct);
 
     this.cartService.addToCart(theCartItem);
 

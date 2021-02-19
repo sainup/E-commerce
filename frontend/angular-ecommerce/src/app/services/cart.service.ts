@@ -9,36 +9,42 @@ export class CartService {
   
 
   cartItems: CartItem[] = [];
+  existingCartItem : CartItem = undefined;
 
   totalPrice : Subject<number> = new BehaviorSubject<number>(0) ;
   totalQuantity : Subject<number> = new BehaviorSubject<number>(0);
 
   constructor() { }
+  
 
   addToCart(theCartItem: CartItem){
 
+    console.log("CART ITEM : " + theCartItem.name  + "ID : " + theCartItem.id);
     //check if we already have the item in our cart
     let alreadyExistsInCart : boolean =false;
-    let existingCartItem : CartItem = undefined;
+    
 
     if(this.cartItems.length > 0){
     //find the item in the cart based on item id
 
-    existingCartItem = this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
-    // check if we found it
+    this.existingCartItem = this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
+    console.log("Result" ,this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id));
 
-    alreadyExistsInCart = (existingCartItem != undefined);
+    // check if we found it
+      // console.log("Existing item :" , existingCartItem.name);
+    alreadyExistsInCart = (this.existingCartItem !== undefined);
     }
 
     if(alreadyExistsInCart){
 
       //increment the quantity
 
-      existingCartItem.quantity++;
+      this.existingCartItem.quantity++;
     }else{
       this.cartItems.push(theCartItem);
     }
-
+    
+    console.log(this.cartItems);
     this.computeCartTotals();
     
     

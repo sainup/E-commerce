@@ -27,8 +27,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProductCategoryAdminComponent } from './components/admin/product-category-admin/product-category-admin.component';
 import { CategoryFormComponent } from './components/admin/category-form/category-form.component';
 import { UpdateCategoryComponent } from './components/admin/update-category/update-category.component';
-import { LoginComponent } from './components/login/login.component';
-import { LoginStatusComponent } from './components/login-status/login-status.component';
 
 import {
   OKTA_CONFIG,
@@ -52,7 +50,7 @@ const oktaConfig = Object.assign({
 //Adding routes to specific page
 const routes: Routes = [
   { path: 'login/callback', component: OktaCallbackComponent },
-  { path: 'login', component: LoginComponent },
+
 
   { path: 'checkout', component: CheckoutComponent },
   { path: 'cart-details', component: CartDetailComponent },
@@ -87,8 +85,7 @@ const routes: Routes = [
     ProductCategoryAdminComponent,
     CategoryFormComponent,
     UpdateCategoryComponent,
-    LoginComponent,
-    LoginStatusComponent
+   
 
   ],
   imports: [
@@ -99,12 +96,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
-    OktaAuthModule
+   
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: oktaConfig },
-    {
-      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-    }
+  providers: [ProductService,
   ],
   bootstrap: [AppComponent]
 })

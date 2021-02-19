@@ -23,6 +23,9 @@ export class ProductService {
   }
 
 
+  getFullProducts() : Observable<Product[]>{
+    return this.httpClient.get<Product[]>(this.baseUrl);
+  }
 
 
 
@@ -37,23 +40,23 @@ export class ProductService {
 
 
   getFullProductList(thePage: number,
-    thePageSize: number): Observable<GetResponseProducts> {
+    thePageSize: number): Observable<Product[]> {
 
     const searchUrl = `${this.baseUrl}?page=${thePage}&size=${thePageSize}`;
-    return this.httpClient.get<GetResponseProducts>(searchUrl);
+    return this.httpClient.get<Product[]>(searchUrl);
   }
 
 
   //for pagination
   getProductListPaginate(thePage: number,
     thePageSize: number,
-    theCategoryId: number): Observable<GetResponseProducts> {
+    theCategoryId: number): Observable<Product[]> {
 
     // need to build URL based on category id, page and size 
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
       + `&page=${thePage}&size=${thePageSize}`;
 
-    return this.httpClient.get<GetResponseProducts>(searchUrl);
+    return this.httpClient.get<Product[]>(searchUrl);
   }
 
 
@@ -62,7 +65,7 @@ export class ProductService {
     // need to build URL based on category id 
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
 
-    return this.getProducts(searchUrl);
+    return this.httpClient.get<Product[]>(searchUrl);
   }
 
   searchProducts(theKeyword: string): Observable<Product[]> {
@@ -93,17 +96,18 @@ export class ProductService {
   searchProductsPaginate(thePage: number,
     thePageSize: number,
     theKeyword: string): Observable<GetResponseProducts> {
-
+      
     // need to build URL based on keyword, page and size 
     const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`
       + `&page=${thePage}&size=${thePageSize}`;
-
+      console.log("Searching : " + searchUrl);
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
 
 
 }
 
+//To filter out the data from _embedded form coming from @Repository (Spring boot)
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
@@ -115,4 +119,5 @@ interface GetResponseProducts {
     number: number
   }
 }
+
 

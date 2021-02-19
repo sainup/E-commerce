@@ -25,9 +25,7 @@ export class ProductCategoryService {
   //getting a list of Product-Categories
   getProductCategories(): Observable<ProductCategory[]> {
 
-    return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
-      map(response => response._embedded.productCategory)
-    );
+    return this.httpClient.get<ProductCategory[]>(this.categoryUrl);
   }
 
 
@@ -71,8 +69,4 @@ export class ProductCategoryService {
 }
 
 
-interface GetResponseProductCategory {
-  _embedded: {
-    productCategory: ProductCategory[];
-  }
-}
+
