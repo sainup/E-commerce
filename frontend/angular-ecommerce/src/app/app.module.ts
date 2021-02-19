@@ -16,47 +16,32 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/client/cart-status/cart-status.component';
 import { CartDetailComponent } from './components/client/cart-detail/cart-detail.component';
 import { CheckoutComponent } from './components/client/checkout/checkout.component';
-import { from } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductListAdminComponent } from './components/admin/product-list-admin/product-list-admin.component';
 import { ProductFormComponent } from './components/admin/product-form/product-form.component';
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ProductCategoryAdminComponent } from './components/admin/product-category-admin/product-category-admin.component';
 import { CategoryFormComponent } from './components/admin/category-form/category-form.component';
 import { UpdateCategoryComponent } from './components/admin/update-category/update-category.component';
+import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { TokenInterceptor } from './TokenInterceptor';
 
-import {
-  OKTA_CONFIG,
-  OktaAuthModule,
-  OktaCallbackComponent
-} from '@okta/okta-angular';
+import {NgxWebstorageModule} from 'ngx-webstorage';
 
-import myAppConfig from './config/my-app-config';
-import { AuthInterceptor } from './shared/okta/auth-interceptor';
 
-const oktaConfig = Object.assign({
-  onAuthRequired: (injector) => {
-    const router = injector.get(Router);
-
-    //redirec tthe user to your custom login page 
-    router.navigate(['/login']);
-  }
-}, myAppConfig.oidc);
 
 
 //Adding routes to specific page
 const routes: Routes = [
-  { path: 'login/callback', component: OktaCallbackComponent },
-
-
   { path: 'checkout', component: CheckoutComponent },
   { path: 'cart-details', component: CartDetailComponent },
   { path: 'admin/addProduct', component: ProductFormComponent },
   { path: 'admin/updateCategory', component: UpdateCategoryComponent },
-
+  { path: 'login', component: LoginComponent },
   { path: 'admin/addCategory', component: CategoryFormComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'admin/products', component: ProductListAdminComponent },
@@ -85,7 +70,9 @@ const routes: Routes = [
     ProductCategoryAdminComponent,
     CategoryFormComponent,
     UpdateCategoryComponent,
-   
+    SignUpComponent,
+    LoginComponent
+
 
   ],
   imports: [
@@ -96,9 +83,18 @@ const routes: Routes = [
     ReactiveFormsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
-   
+    NgxWebstorageModule.forRoot(),
+
   ],
-  providers: [ProductService,
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  },
+  {
+    provide: ToastrService, useClass: ToastrService
+  }
+
   ],
   bootstrap: [AppComponent]
 })

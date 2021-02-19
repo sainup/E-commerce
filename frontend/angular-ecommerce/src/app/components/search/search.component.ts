@@ -14,9 +14,16 @@ export class SearchComponent implements OnInit {
   }
 
   doSearch(value:string){
+    
     console.log(`value=${value}`);
+    //trims any trailing or before white spaces
+    value = value.trim();
 
-    this.router.navigateByUrl(`/search/${value}`);
+    //checks if value is empty and with no whitespace
+    if(/\S/.test(value)){
+      this.router.navigateByUrl(`/search/${value}`);
+    }
+    
   }
 
 }

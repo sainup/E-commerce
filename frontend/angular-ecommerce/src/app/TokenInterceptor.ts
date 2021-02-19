@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import { error } from "protractor";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
 import { catchError, filter, switchMap, take } from "rxjs/operators";
+import { LoginResponse } from "./components/auth/login/login-response.payload";
+import { AuthService } from "./services/auth.service";
 
 @Injectable({
     providedIn: 'root'
