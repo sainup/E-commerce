@@ -9,14 +9,14 @@
   <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
       <a routerLink="/products">
-        <img src="assets/images/logo.png" alt="luv2shop" class="img-responsive" width="20px">
+        <img src="assets/images/logo.png" alt="luv2shop" class="img-responsive" width="50px">
       </a>
     </div>
     <app-product-category-menu></app-product-category-menu>
 
   </aside>
 
-  <p>Default pagination:</p>
+ 
 
 
   <!-- End MENU SIDE BAR-->
@@ -24,28 +24,7 @@
   <!-- PAGE CONTAINER-->
   <div class="page-container">
     <!-- HEADER DESKTOP-->
-    <header class="header-desktop">
-      <div class="section-content section-content-p30">
-        <div class="container-fluid">
-          <div class="header-wrap">
-            <app-search></app-search>
-            <app-cart-status> </app-cart-status>
-
-           
-            
-        
-              <a routerLink="/login" class="au-btn-submit" >
-                  Search
-              </a>
-          
-              
-         
-
-          </div>
-          <div class="account-wrap"></div>
-        </div>
-      </div>
-    </header>
+    <app-header></app-header>
 
     <!-- END HEADER DESKTOP-->
 

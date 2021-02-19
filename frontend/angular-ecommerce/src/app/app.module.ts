@@ -26,11 +26,12 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ProductCategoryAdminComponent } from './components/admin/product-category-admin/product-category-admin.component';
 import { CategoryFormComponent } from './components/admin/category-form/category-form.component';
 import { UpdateCategoryComponent } from './components/admin/update-category/update-category.component';
-import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { TokenInterceptor } from './TokenInterceptor';
 
-import {NgxWebstorageModule} from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { HeaderComponent } from './components/header/header.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
 
 
 
@@ -42,6 +43,7 @@ const routes: Routes = [
   { path: 'admin/addProduct', component: ProductFormComponent },
   { path: 'admin/updateCategory', component: UpdateCategoryComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'admin/addCategory', component: CategoryFormComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'admin/products', component: ProductListAdminComponent },
@@ -70,8 +72,9 @@ const routes: Routes = [
     ProductCategoryAdminComponent,
     CategoryFormComponent,
     UpdateCategoryComponent,
-    SignUpComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent,
+    SignupComponent
 
 
   ],

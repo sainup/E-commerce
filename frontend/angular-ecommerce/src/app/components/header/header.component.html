@@ -1,0 +1,35 @@
+<header class="header-desktop">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <div class="header-wrap">
+                <app-search></app-search>
+                <app-cart-status> </app-cart-status>
+
+                <div>
+                    <div *ngIf ="isLoggedIn" ngbDropdown class="float-right">
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem>Name</button>
+                            <button (click) ="logout()" class="au-btn-submit" ngbDropdownItem> Logout</button>
+                        </div>
+                        <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>
+                            <img src="assets/images/usericon.png" alt="" class="account-icon">
+                            {{username}}
+                        </button>
+                    </div>
+    
+                    <div *ngIf ="!isLoggedIn">
+                        <button routerLink="/login" class="au-btn-submit mr-2">
+                            Login
+                        </button>
+                        <button routerLink="/signup" class="au-btn-submit">
+                            Sign Up
+                        </button>
+                    </div>
+                </div>
+               
+
+            </div>
+            <!-- <div class="account-wrap"></div> -->
+        </div>
+    </div>
+</header>

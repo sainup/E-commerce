@@ -41,15 +41,14 @@ export class LoginComponent implements OnInit {
     this.loginRequestPayload.username = this.loginForm.get('username').value;
     this.loginRequestPayload.password = this.loginForm.get('password').value;
 
-    this.authService.login(this.loginRequestPayload).subscribe(data => {
+    this.authService.login(this.loginRequestPayload).subscribe((data) => {
       if (data) {
         this.isError = false;
         this.router.navigateByUrl('/products');
         this.toastr.success('Login Successful')
-      } else {
-        this.toastr.error('Login Failed')
+      } 
+      },err=>  {
         this.isError = true;
-      }
     });
   }
 
