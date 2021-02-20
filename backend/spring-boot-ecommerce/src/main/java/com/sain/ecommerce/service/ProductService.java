@@ -40,6 +40,13 @@ public class ProductService {
         }
     }
 
+    public List<ProductDto> getProductByCategory(Long id, Pageable pageable) {
+            return productRepository.findByCategoryId(id,pageable)
+                    .stream()
+                    .map(productMapper::mapProductToDto)
+                    .collect(Collectors.toList());
+    }
+
     //save the product to database
     public ProductDto addProduct(ProductDto productDto) {
         Product product = productRepository.save(productMapper.mapDtoToProduct(productDto));
@@ -69,4 +76,7 @@ public class ProductService {
         return productRepository.save(productMapper.mapDtoToProduct(productDto));
 
     }
+
+
 }
+

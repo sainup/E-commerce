@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +66,13 @@ public class ProductController {
             notes = "Provides an id to update a specific product from product list")
     public ResponseEntity<Product> updateProduct(@ApiParam(value = "ID value for the product you want to update",required = true)@PathVariable Long id, @RequestBody ProductDto productDto){
         return ResponseEntity.status(HttpStatus.OK).body(productService.updateProduct(id, productDto));
+    }
+
+    @GetMapping("/search/findByCategoryId")
+    public ResponseEntity<List<ProductDto>> getProductByCategory(@RequestParam(value = "id") Long id, Pageable pageable){
+
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductByCategory(id,pageable));
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.sain.ecommerce.config;
 
+import com.sain.ecommerce.exceptions.AuthenticationHandler;
 import com.sain.ecommerce.security.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationHandler unauthorizedHandler;
+
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -36,8 +39,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**")
+                .permitAll()
+                .antMatchers("/error")
                 .permitAll()
                 .antMatchers(HttpMethod.GET,"/api/**").permitAll()
                 .antMatchers("/v2/api-docs",

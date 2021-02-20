@@ -3,6 +3,8 @@ package com.sain.ecommerce.security;
 import com.sain.ecommerce.exceptions.EcommerceException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -20,6 +22,7 @@ import java.util.Date;
 import static io.jsonwebtoken.Jwts.parser;
 
 @Service
+@Slf4j
 public class JwtProvider {
 
     private KeyStore keyStore;
@@ -80,8 +83,14 @@ public class JwtProvider {
 
     //validates the token
     public boolean validateToken(String jwt) {
-        parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt);
-        return true;
+        try{
+            parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt);
+            return true;
+        }catch (MalformedJwtException e){
+            log.info("Invalid JWT token : " + e.getMessage());
+        }
+
+        return false;
     }
 
     //retrieves username from Jwt
