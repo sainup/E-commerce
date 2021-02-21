@@ -4,6 +4,7 @@ import com.sain.ecommerce.dto.AuthenticationResponse;
 import com.sain.ecommerce.dto.LoginRequest;
 import com.sain.ecommerce.dto.RefreshTokenRequest;
 import com.sain.ecommerce.dto.RegisterRequest;
+import com.sain.ecommerce.exceptions.EcommerceException;
 import com.sain.ecommerce.service.AuthService;
 import com.sain.ecommerce.service.RefreshTokenService;
 import io.swagger.annotations.ApiOperation;
@@ -26,8 +27,12 @@ public class AuthController {
     //Registers user
     @PostMapping("/signup")
     @ApiOperation(value = "Add new user")
-    public ResponseEntity<String> signUp(@RequestBody RegisterRequest registerRequest){
-        authService.signUp(registerRequest);
+    public ResponseEntity<String> signUp(@Valid @RequestBody RegisterRequest registerRequest){
+        try{
+            authService.signUp(registerRequest);
+        }catch (EcommerceException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
     }
@@ -48,7 +53,7 @@ public class AuthController {
     @PostMapping("/login")
     @ApiOperation(value = "Logs the user in",
             notes = "Logins the user if authentication is successful")
-    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
+    public AuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest){
         return authService.login(loginRequest);
     }
 

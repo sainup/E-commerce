@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class ProductCategoryController {
 
     //Adds new category
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Adds new ProductCategory")
     public ResponseEntity<ProductCategoryDto> addCategory(@RequestBody ProductCategoryDto productCategoryDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(productCategoryService.addCategory(productCategoryDto));
@@ -46,6 +48,7 @@ public class ProductCategoryController {
 
     //Updates category by id
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Updates ProductCategory by ID",
             notes = "Provides an id to update a specific category from ProductCategory list ")
     public ResponseEntity<ProductCategory> updateCategory(@ApiParam(value = "ID value category you want to update") @PathVariable Long id, @RequestBody ProductCategoryDto productCategoryDto){
@@ -54,6 +57,7 @@ public class ProductCategoryController {
 
     //Deletes category by id
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Deletes ProductCategory by ID",
             notes = "Provides an id to delete a specific category from ProductCategory list ")
     public ResponseEntity<String> deleteCategory(@ApiParam(value = "ID value category you want to delete")@PathVariable Long id){

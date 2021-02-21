@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +36,7 @@ public class ProductController {
 
     //to add new product
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Add new Product",
     notes = "Able to add product")
     public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody ProductDto productDto) {
@@ -53,6 +55,7 @@ public class ProductController {
 
     //deletes product by id
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Deletes Product by id",
             notes = "Provides an id to delete a specific product from product list")
     public ResponseEntity<String> deleteProduct(@ApiParam(value = "ID value for the product you want to delete",required = true) @PathVariable Long id){
@@ -62,6 +65,7 @@ public class ProductController {
 
     //updates product by id
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Updates Product by id",
             notes = "Provides an id to update a specific product from product list")
     public ResponseEntity<Product> updateProduct(@ApiParam(value = "ID value for the product you want to update",required = true)@PathVariable Long id, @RequestBody ProductDto productDto){
