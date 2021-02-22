@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ProductCategory } from '../common/product-category';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ProductCategoryService {
 
   category: Subject<ProductCategory> = new Subject<ProductCategory>();
 
-  private categoryUrl = 'http://localhost:8080/api/product-category';
+  private categoryUrl = `${environment.baseUrl}api/product-category`;
 
   constructor(private httpClient: HttpClient) { }
 

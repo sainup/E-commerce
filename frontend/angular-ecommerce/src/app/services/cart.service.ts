@@ -19,7 +19,6 @@ export class CartService {
 
   addToCart(theCartItem: CartItem){
 
-    console.log("CART ITEM : " + theCartItem.name  + "ID : " + theCartItem.id);
     //check if we already have the item in our cart
     let alreadyExistsInCart : boolean =false;
     
@@ -28,7 +27,6 @@ export class CartService {
     //find the item in the cart based on item id
 
     this.existingCartItem = this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
-    console.log("Result" ,this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id));
 
     // check if we found it
       // console.log("Existing item :" , existingCartItem.name);
@@ -38,7 +36,6 @@ export class CartService {
     if(alreadyExistsInCart){
 
       //increment the quantity
-
       this.existingCartItem.quantity++;
     }else{
       this.cartItems.push(theCartItem);
@@ -71,14 +68,10 @@ export class CartService {
 
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
-    console.log(`Contents of the cart`);
+   
     for(let tempCartItem of this .cartItems){
-      const subTotalPrice = tempCartItem.quantity*tempCartItem.unitPrice;
-      console.log(`name: ${tempCartItem.name}, quantity: ${tempCartItem.quantity}, unitPrice: ${tempCartItem.unitPrice}, subTotalPrice = ${subTotalPrice}`);
+      const subTotalPrice = tempCartItem.quantity*tempCartItem.unitPrice; 
     }
-
-    console.log(`totalPrice : ${totalPriceValue.toFixed(2)},totalQuantityValue : ${totalQuantityValue}}`);
-    console.log("-----");
   }
 
   decrementFromCart(theCartItem: CartItem) {

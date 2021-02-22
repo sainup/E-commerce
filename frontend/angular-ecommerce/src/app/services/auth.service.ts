@@ -4,6 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { LocalStorageService } from 'ngx-webstorage';
 import { Observable, throwError } from 'rxjs';
 import { map, repeat, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { LoginRequestPayLoad } from '../components/auth/login/login-request.payload';
 import { LoginResponse } from '../components/auth/login/login-response.payload';
 import { SignupRequestPayLoad } from '../components/auth/signup/signup-request.payload';
@@ -14,7 +15,8 @@ import { SignupRequestPayLoad } from '../components/auth/signup/signup-request.p
 export class AuthService {
  
 
-  private authUrl = 'http://localhost:8080/api/auth/';
+   authUrl =  environment.baseUrl;
+
   @Output() loggedIn : EventEmitter<boolean> = new EventEmitter();
   @Output() username : EventEmitter<string> = new EventEmitter();
   @Output() hasRoles : EventEmitter<string[]> = new EventEmitter();
@@ -37,7 +39,6 @@ export class AuthService {
   login(loginRequestPayload: LoginRequestPayLoad) : Observable<boolean> {
     return this.http.post<LoginResponse>(`${this.authUrl}login`, loginRequestPayload)
     .pipe(map(data => {
-      console.log("LOGIN DATA : ", data )
       this.localStorage.store('authenticationToken', data.authenticationToken);
       this.localStorage.store('username',data.username);
       this.localStorage.store('refreshToken',data.refreshToken);

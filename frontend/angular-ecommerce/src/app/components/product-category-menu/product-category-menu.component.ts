@@ -32,9 +32,16 @@ export class ProductCategoryMenuComponent implements OnInit {
           this.isAdmin = true;
         }
       }
-      this.listProductCategories();
-    })
+    });
   
+    this.hasRole = this.authService.getRoles();
+
+    if(this.hasRole !== null){
+      if(this.hasRole.includes('ROLE_ADMIN')){
+        this.isAdmin = true;
+      }
+    }
+    console.log("IS ADMIN? " , this.isAdmin);
    
 
   

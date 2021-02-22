@@ -4,6 +4,7 @@ import { Product } from '../common/product';
 import { Observable, throwError, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { ProductCategory } from '../common/product-category';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ export class ProductService {
 
 
 
-  private baseUrl = 'http://localhost:8080/api/products';
+  private baseUrl = `${environment.baseUrl}api/products`;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -22,12 +23,9 @@ export class ProductService {
     return throwError(error);
   }
 
-
-  getFullProducts() : Observable<Product[]>{
+  getFullProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(this.baseUrl);
   }
-
-
 
   getProduct(theProductId: number): Observable<Product> {
 
@@ -37,15 +35,12 @@ export class ProductService {
     return this.httpClient.get<Product>(productUrl);
   }
 
-
-
   getFullProductList(thePage: number,
     thePageSize: number): Observable<Product[]> {
 
     const searchUrl = `${this.baseUrl}?page=${thePage}&size=${thePageSize}`;
     return this.httpClient.get<Product[]>(searchUrl);
   }
-
 
   //for pagination
   getProductListPaginate(thePage: number,
@@ -58,7 +53,6 @@ export class ProductService {
 
     return this.httpClient.get<Product[]>(searchUrl);
   }
-
 
   getProductList(theCategoryId: number): Observable<Product[]> {
 
@@ -84,27 +78,21 @@ export class ProductService {
 
   addProducts(product: Product): Observable<Product> {
 
-    console.log("at PRODUCT SAVE ");
-    console.log("success" + JSON.stringify(product));
+
     return this.httpClient.post<Product>(this.baseUrl, product).pipe(catchError(this.handleError));
 
 
   }
 
-
-
   searchProductsPaginate(thePage: number,
     thePageSize: number,
     theKeyword: string): Observable<GetResponseProducts> {
-      
+
     // need to build URL based on keyword, page and size 
     const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`
       + `&page=${thePage}&size=${thePageSize}`;
-      console.log("Searching : " + searchUrl);
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
-
-
 }
 
 //To filter out the data from _embedded form coming from @Repository (Spring boot)

@@ -1,0 +1,14 @@
+.align{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.align a {
+    padding: 10px;
+    margin-bottom: 0;
+}
+

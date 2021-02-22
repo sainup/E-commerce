@@ -1,9 +1,16 @@
 
 
  <!--if products empty then display a message-->
+ <div class="align">
+     <h2>Product List</h2>
 
- <a routerLink="/admin/addProduct" class="btn btn-primary"> Add Products </a>
+    <a routerLink="/admin/addProduct" class="btn btn-primary text-center"> Add Products </a>
+
+ </div>
+
  <div class="main-content">
+   
+ 
     <div class="section-content section-content-p30">
         <div class="container-fluid">
 
@@ -26,7 +33,10 @@
                     <tbody>
                         <tr *ngFor="let tempProduct of products">
                             <td></td>
-                            <td class="align-middle">{{tempProduct.name}}</td>
+                          
+                                <td class="align-middle" routerLink="/products/{{tempProduct.id}}" style="cursor: pointer;">{{tempProduct.name}}</td>
+                    
+                            
                             <td class="align-middle">{{tempProduct.unitPrice | currency: 'USD'}}</td>
                             <td class="align-middle">{{tempProduct.unitsInStock}}</td>
                         </tr>
