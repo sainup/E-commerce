@@ -175,6 +175,7 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.placeOrder(purchase).subscribe(data => {
       console.log("Successfully added a order.", data.orderTrackingNumber);
       this.resetCart();
+      this.router.navigateByUrl('/finish');
     }, err => {
       console.log("Error occurred during the placement of order.", err.message);
     })

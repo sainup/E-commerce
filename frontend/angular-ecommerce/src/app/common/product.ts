@@ -1,3 +1,5 @@
+import { ProductCategory } from "./product-category";
+
 export class Product {
 
     id:string;
@@ -10,6 +12,6 @@ export class Product {
     unitsInStock:number;
     dateCreated;
     lastUpdated;
-    category : string;
+    category : ProductCategory;
 
 }

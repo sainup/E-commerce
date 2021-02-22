@@ -41,12 +41,15 @@ export class ProductCategoryAdminComponent implements OnInit {
   deleteCategory(theProductCategory : ProductCategory){
     console.log(theProductCategory.id);
 
-    this.categoryService.deleteCategory(theProductCategory.id).subscribe(() => {
+    this.categoryService.deleteCategory(theProductCategory.id).subscribe((data) => {
       this.listCategories();
+      console.log("Successfully deleted")
+    },err =>{
+      console.log("Error while deleting ")
     }
      
     );
-  
+    window.location.reload;
     this.router.navigateByUrl('/admin/categories');
   }
 

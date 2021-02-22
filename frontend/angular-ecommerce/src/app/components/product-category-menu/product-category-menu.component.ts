@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProductCategory } from 'src/app/common/product-category';
 import { ProductService } from 'src/app/services/product.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
+import { LocalStorageService } from 'ngx-webstorage';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-product-category-menu',
@@ -10,12 +12,33 @@ import { ProductCategoryService } from 'src/app/services/product-category.servic
 })
 export class ProductCategoryMenuComponent implements OnInit {
 
+  hasRole : string [] = [];
+  isAdmin : boolean = false;
 
   productCategories: ProductCategory[];
-  constructor(private categoryService: ProductCategoryService) { }
+  constructor(private categoryService: ProductCategoryService,
+    private authService : AuthService,
+    )  { }
 
   ngOnInit(): void {
     this.listProductCategories();
+  
+    this.authService.hasRoles.subscribe((data : string [] ) => {
+
+      this.hasRole = data;
+      console.log("hasRoles : " , this.hasRole)
+      if(this.hasRole !== null){
+        if(this.hasRole.includes('ROLE_ADMIN')){
+          this.isAdmin = true;
+        }
+      }
+      this.listProductCategories();
+    })
+  
+   
+
+  
+  
   }
   listProductCategories() {
     this.categoryService.getProductCategories().subscribe(

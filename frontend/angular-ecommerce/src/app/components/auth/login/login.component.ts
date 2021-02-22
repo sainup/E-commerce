@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
       if (data) {
         this.isError = false;
         this.router.navigateByUrl('/products');
-        this.toastr.success('Login Successful')
       } 
       },err=>  {
         this.isError = true;

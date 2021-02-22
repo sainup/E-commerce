@@ -17,6 +17,7 @@ export class AuthService {
   private authUrl = 'http://localhost:8080/api/auth/';
   @Output() loggedIn : EventEmitter<boolean> = new EventEmitter();
   @Output() username : EventEmitter<string> = new EventEmitter();
+  @Output() hasRoles : EventEmitter<string[]> = new EventEmitter();
 
   private refreshTokenPayload = { 
     refreshToken: this.getRefreshToken(),
@@ -36,12 +37,15 @@ export class AuthService {
   login(loginRequestPayload: LoginRequestPayLoad) : Observable<boolean> {
     return this.http.post<LoginResponse>(`${this.authUrl}login`, loginRequestPayload)
     .pipe(map(data => {
+      console.log("LOGIN DATA : ", data )
       this.localStorage.store('authenticationToken', data.authenticationToken);
       this.localStorage.store('username',data.username);
       this.localStorage.store('refreshToken',data.refreshToken);
       this.localStorage.store('expiresAt',data.expiresAt);
+      this.localStorage.store('roles',data.roles);
       this.loggedIn.emit(true);
       this.username.emit(data.username);
+      this.hasRoles.emit(data.roles);
       return true;
     }));
   }
@@ -68,6 +72,7 @@ export class AuthService {
     this.localStorage.clear('username');
     this.localStorage.clear('refreshToken');
     this.localStorage.clear('expiresAt');
+    this.localStorage.clear('roles');
 
   }
 
@@ -86,6 +91,10 @@ export class AuthService {
     return this.localStorage.retrieve('username');
   }
 
+  getRoles(){
+    return this.localStorage.retrieve('roles');
+  }
+  
   getExpirationTime(){
     return this.localStorage.retrieve('expiresAt');
   }

@@ -43,6 +43,8 @@ export class SignupComponent implements OnInit {
     this.authService.signup(this.signupRequestPayload)
     .subscribe(()=> {
      console.log("Signup Successful")
+     this.router.navigateByUrl("/login")
+     this.toastr.success("Registration Successful!")
     }, () => {
       this.toastr.error("Registration Failed! Please try again");
     })

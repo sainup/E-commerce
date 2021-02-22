@@ -17,16 +17,19 @@
     </ul>
 
 
-    <ul class="list-unstyled navbar-list">
-      <li>
-        <h3>Admin</h3>
-        <ul class="list-unstyled navbar-list">
-          <li> <a routerLink="admin/products" routerLinkActive="active-link"> Products </a> </li>
-          <li><a routerLink ="admin/categories" routerLinkActive="active-link">Categories </a> </li>
-        </ul>
-      </li>
+    <div *ngIf = "isAdmin">
+      <ul class="list-unstyled navbar-list">
+        <li>
+          <h3>Admin</h3>
+          <ul class="list-unstyled navbar-list">
+            <li> <a routerLink="admin/products" routerLinkActive="active-link"> Products </a> </li>
+            <li><a routerLink ="admin/categories" routerLinkActive="active-link">Categories </a> </li>
+          </ul>
+        </li>
+  
+      </ul>
+    </div>
 
-    </ul>
 
   </nav>
 </div>

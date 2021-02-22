@@ -10,6 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartDetailComponent implements OnInit {
 
   cartItems: CartItem[] = [] ;
+  isDisabled : boolean = false;
   totalPrice : number = 0;
   totalQuantity:number = 0;
   constructor(private cartService: CartService) { }
@@ -41,13 +42,23 @@ export class CartDetailComponent implements OnInit {
   }
 
   incrementQuantity(theCartItem: CartItem){
-
+  
+    
     this.cartService.addToCart(theCartItem);
   }
 
   decrementQuantity(theCartItem : CartItem){
-
-    this.cartService.decrementFromCart(theCartItem);
+      if(theCartItem.quantity <= 1){
+        return;
+      }else{
+       
+        console.log(this.isDisabled)
+        this.cartService.decrementFromCart(theCartItem);
+      }
+      
+     
+   
+   
   }
 
   remove(theCartItem : CartItem){

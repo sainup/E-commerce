@@ -32,13 +32,15 @@ import { TokenInterceptor } from './TokenInterceptor';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { HeaderComponent } from './components/header/header.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
+import { AuthGuardGuard } from './components/auth/auth-guard.guard';
+import { FinishPageComponent } from './components/client/finish-page/finish-page.component';
 
 
 
 
 //Adding routes to specific page
 const routes: Routes = [
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout', component: CheckoutComponent, canActivate :[AuthGuardGuard] },
   { path: 'cart-details', component: CartDetailComponent },
   { path: 'admin/addProduct', component: ProductFormComponent },
   { path: 'admin/updateCategory', component: UpdateCategoryComponent },
@@ -53,8 +55,10 @@ const routes: Routes = [
   { path: 'category', component: ProductListComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'admin/categories/:id', component: UpdateCategoryComponent },
+  {path : 'finish' , component : FinishPageComponent},
   { path: '', redirectTo: '/products', pathMatch: 'full' },
-  { path: '**', redirectTo: '/products', pathMatch: 'full' }
+  { path: '**', redirectTo: '/products', pathMatch: 'full' },
+
 ];
 
 @NgModule({
@@ -74,7 +78,8 @@ const routes: Routes = [
     UpdateCategoryComponent,
     LoginComponent,
     HeaderComponent,
-    SignupComponent
+    SignupComponent,
+    FinishPageComponent
 
 
   ],

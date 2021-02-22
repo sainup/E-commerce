@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
   // new properties for pagination
   thePageNumber: number = 1;
   thePageSize: number = 10;
-  theTotalElements: number ;
+  theTotalElements: number;
 
   previousKeyword: string = null;
 
@@ -63,11 +63,11 @@ export class ProductListComponent implements OnInit {
     }
     this.previousKeyword = theKeyword;
 
-    this.productService.searchProductsPaginate(this.thePageNumber -1 ,
+    this.productService.searchProductsPaginate(this.thePageNumber - 1,
       this.thePageSize,
       theKeyword).subscribe(this.processResult());
 
-   
+
     // if (this.router.url === "/admin/products") {
     //   this.previousKeyword = theKeyword;
     //   this.productService.searchProductsPaginate(this.thePageNumber - 1,
@@ -94,14 +94,13 @@ export class ProductListComponent implements OnInit {
 
       this.previousCategoryId = this.currentCategoryId;
 
-      this.productService.getProductList(this.currentCategoryId).subscribe(data =>{
+      this.productService.getProductList(this.currentCategoryId).subscribe(data => {
         this.products = data;
         this.theTotalElements = data.length;
 
       })
 
-      console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}, theTotalNumber =${this.theTotalElements},
-      thePageSize=${this.thePageSize}` );
+
 
       // now get the products for the given category id
       this.productService.getProductListPaginate(this.thePageNumber - 1,
@@ -114,7 +113,7 @@ export class ProductListComponent implements OnInit {
     }
     else {
       this.productService.getFullProducts().subscribe(
-        data=>{
+        data => {
           this.theTotalElements = data.length;
         }
       )
@@ -122,15 +121,8 @@ export class ProductListComponent implements OnInit {
         this.thePageSize).subscribe(
           data => {
             this.products = data;
-            // this.theTotalElements = this.products.length;
-            console.log(`INSIDE THE SUBSCRIPTION =>> thePageNumber=${this.thePageNumber}, theTotalNumber =${this.theTotalElements},
-          thePageSize=${this.thePageSize}, theProductsSize=${this.products.length}`  );
           });
 
-        
-
-          console.log(`thePageNumber=${this.thePageNumber}, theTotalNumber =${this.theTotalElements},
-          thePageSize=${this.thePageSize}, theProductsSize=${this.products.length}`  );
     }
 
     //

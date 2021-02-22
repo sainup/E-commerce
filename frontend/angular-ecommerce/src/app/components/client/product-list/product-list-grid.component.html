@@ -1,6 +1,21 @@
 <div class="main-content">
+    <div class="mr-3" style="text-align: right;">
+        <span class="mr-2"> Page Size</span>
+
+        <select (change)="updatePageSize($event.target.value)">
+            <option>2</option>
+            <option>5</option>
+            <option selected="true">10</option>
+            <option>20</option>
+            <option>50</option>
+        </select>
+
+    </div>
+
     <div class="section-content section-content-p30">
         <div class="container-fluid">
+
+
             <div class="row">
 
                 <div *ngFor="let tempProduct of products" class="col-md-3">
@@ -39,28 +54,13 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-9" style="padding-left: 20%">
-                            
-                                <ngb-pagination [collectionSize]="theTotalElements" 
-                                [(page)]="thePageNumber" 
-                                 [pageSize]="thePageSize"
-                                 [maxSize]="5"
-                                 (pageChange)="listProducts()"
-                                 [boundaryLinks]="true"
-                                aria-label="Default pagination"></ngb-pagination>
+
+                                <ngb-pagination [collectionSize]="theTotalElements" [(page)]="thePageNumber"
+                                    [pageSize]="thePageSize" [maxSize]="5" (pageChange)="listProducts()"
+                                    [boundaryLinks]="true" aria-label="Default pagination"></ngb-pagination>
 
                             </div>
-                            <div class = "col-md-3 mt-2" style = "text-align: right;">
-                            <span class="mr-2"> Page Size</span>
 
-                            <select (change)="updatePageSize($event.target.value)">
-                                <option>2</option>
-                                <option>5</option>
-                                <option selected="true">10</option>
-                                <option>20</option>
-                                <option>50</option>
-                            </select>
-                            
-                            </div>
                         </div>
                     </div>
 
