@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -27,10 +28,12 @@ public class Product {
 
 
     @NotBlank
+    @NotNull
     @Column(name="sku")
     private String sku;
 
     @NotBlank
+    @NotNull
     @Column(name="name")
     private String name;
 
@@ -39,6 +42,7 @@ public class Product {
 
     @Min(value = 0,message = "Value should be higher than 0")
     @Column(name="unit_price")
+    @NotNull
     private BigDecimal unitPrice;
 
 

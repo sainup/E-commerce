@@ -1,5 +1,6 @@
 package com.sain.ecommerce.service;
 
+import com.sain.ecommerce.config.AppConfig;
 import com.sain.ecommerce.dto.AuthenticationResponse;
 import com.sain.ecommerce.dto.LoginRequest;
 import com.sain.ecommerce.dto.RefreshTokenRequest;
@@ -40,6 +41,7 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final RefreshTokenService refreshTokenService;
     private final RoleRepository roleRepository;
+    private final AppConfig appConfig;
 
 
     //Registers the users and saves in the database
@@ -117,7 +119,7 @@ public class AuthService {
         mailService.sendMail(new NotificationEmail("Please Activate your Account",
                 user.getEmail(), "Thank you for signing up to Our Ecommerce Project, " +
                 "Please click on the below url to activate your account : " +
-                "http://localhost:8080/api/auth/accountVerification/" + token));
+                appConfig.getUrl() + "/api/auth/accountVerification/" + token));
     }
 
     //generates verification token for the user and saves in the database

@@ -68,7 +68,7 @@ public class ProductController {
     @PreAuthorize("hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
     @ApiOperation(value = "Updates Product by id",
             notes = "Provides an id to update a specific product from product list")
-    public ResponseEntity<Product> updateProduct(@ApiParam(value = "ID value for the product you want to update",required = true)@PathVariable Long id, @RequestBody ProductDto productDto){
+    public ResponseEntity<Product> updateProduct(@ApiParam(value = "ID value for the product you want to update",required = true)@PathVariable Long id,@Valid @RequestBody ProductDto productDto){
         return ResponseEntity.status(HttpStatus.OK).body(productService.updateProduct(id, productDto));
     }
 
