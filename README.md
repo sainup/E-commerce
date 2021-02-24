@@ -1,7 +1,7 @@
 # E-commerce
 FullStack E-commerce Web App is a shopping cart application developed as a project to get to know about different technologies and how they interact.
 
-## Technologies: 
+## Technologies:- 
 
 * Java 11
 * Spring Boot 2.4.0
@@ -10,7 +10,7 @@ FullStack E-commerce Web App is a shopping cart application developed as a proje
 * MySQL
 * Angular 9.1.12
 
-## Features: 
+## Features:- 
 
 * Token Based User Authentication(JWT)
 * CRUD Operations
@@ -18,6 +18,19 @@ FullStack E-commerce Web App is a shopping cart application developed as a proje
 * Cart System
 * Checkout
 
+## Known bugs :-
+* Can access admin page with normal user (Front-End)
+* Wrong pagination in category mode (Front-end)
+* Toasts Error message even when the product is saved succesfully (Front-end)
+
+## Work In Progress :- 
+* Fixing known bugs
+* User profile panel
+
+## Things I would improve in the future :-
+* Better UI and UX
+* Change hosting from heroku to somewhere else
+* Change email service from mailtrap.io
 
 
 
