@@ -30,7 +30,6 @@ See live demo <a href="http://anup-angular-ecommerce.s3-website.eu-central-1.ama
 
 ## Things I would improve in the future :-
 * Better UI and UX
-* Change hosting from heroku to somewhere else
 * Change email service from mailtrap.io
 
 
